@@ -61,7 +61,7 @@
             <thead class="table-dark text-center">
               <tr>
                 <th style="width: 25%;">الحساب المحاسبي <span class="text-danger">*</span></th>
-                <th style="width: 18%;">عملة السطر (حسب الحساب)</th>
+                <th style="width: 18%;">عملة الحساب</th>
                 <th style="width: 12%;">سعر الصرف</th>
                 <th style="width: 17%;">البيان الفرعي</th>
                 <th style="width: 11%;">مدين (Debit)</th>
