@@ -33,7 +33,7 @@ class JournalEntry extends Model
     ];
 
     protected $casts = [
-        'entry_date' => 'date',
+        'entry_date' => 'date:Y-m-d',
         'exchange_rate' => 'decimal:6',
         'total_debit' => 'decimal:4',
         'total_credit' => 'decimal:4',

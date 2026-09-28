@@ -69,7 +69,7 @@
                 <span class="d-block fw-bold small text-dark">{{ pmt.branch ? pmt.branch.name : 'عام / رئيسي' }}</span>
                 <small class="text-muted">{{ pmt.cash_box ? pmt.cash_box.name : '-' }}</small>
               </td>
-              <td>{{ pmt.payment_date }}</td>
+              <td class="text-nowrap">{{ pmt.payment_date }}</td>
               <td>{{ pmt.account ? pmt.account.name : '-' }}</td>
               <td>{{ pmt.cash_or_bank_account ? pmt.cash_or_bank_account.name : '-' }}</td>
               <td class="fw-bold text-danger">{{ formatMoney(pmt.amount) }} {{ pmt.currency ? pmt.currency.code : 'SAR' }}</td>

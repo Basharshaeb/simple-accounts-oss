@@ -69,7 +69,7 @@
                 <span class="d-block fw-bold small text-dark">{{ rcpt.branch ? rcpt.branch.name : 'عام / رئيسي' }}</span>
                 <small class="text-muted">{{ rcpt.cash_box ? rcpt.cash_box.name : '-' }}</small>
               </td>
-              <td>{{ rcpt.receipt_date }}</td>
+              <td class="text-nowrap">{{ rcpt.receipt_date }}</td>
               <td>{{ rcpt.account ? rcpt.account.name : '-' }}</td>
               <td>{{ rcpt.cash_or_bank_account ? rcpt.cash_or_bank_account.name : '-' }}</td>
               <td class="fw-bold text-success">{{ formatMoney(rcpt.amount) }} {{ rcpt.currency ? rcpt.currency.code : 'SAR' }}</td>

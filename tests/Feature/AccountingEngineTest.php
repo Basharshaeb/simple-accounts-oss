@@ -231,4 +231,86 @@ class AccountingEngineTest extends TestCase
         $this->assertEquals(-2000, $bs['retained_earnings']); // Net Loss = -2000
         $this->assertEquals(8000, $bs['total_equity_and_liabilities']);
     }
+
+    public function test_trial_balance_without_dates_balances_and_has_no_opening(): void
+    {
+        $this->postCapitalAndRent();
+
+        $tb = app(FinancialReportService::class)->getTrialBalance($this->companyA->id);
+        $totals = $tb['totals'];
+
+        $this->assertEquals(0, $totals['opening_debit']);
+        $this->assertEquals(0, $totals['opening_credit']);
+        $this->assertEquals(12000, $totals['period_debit']);
+        $this->assertEquals(12000, $totals['period_credit']);
+        $this->assertEquals($totals['ending_debit'], $totals['ending_credit']);
+        $this->assertEquals(10000, $totals['ending_debit']);
+
+        $capital = collect($tb['accounts'])->firstWhere('code', '3110');
+        $this->assertEquals(0, $capital['ending_debit']);
+        $this->assertEquals(10000, $capital['ending_credit']);
+    }
+
+    public function test_trial_balance_with_from_date_splits_opening_and_period(): void
+    {
+        $this->postCapitalAndRent();
+
+        $tb = app(FinancialReportService::class)->getTrialBalance($this->companyA->id, '2026-01-06', '2026-01-31');
+        $totals = $tb['totals'];
+
+        $this->assertEquals(10000, $totals['opening_debit']);
+        $this->assertEquals(10000, $totals['opening_credit']);
+        $this->assertEquals(2000, $totals['period_debit']);
+        $this->assertEquals(2000, $totals['period_credit']);
+        $this->assertEquals(10000, $totals['ending_debit']);
+        $this->assertEquals(10000, $totals['ending_credit']);
+    }
+
+    public function test_account_statement_without_from_date_has_zero_opening(): void
+    {
+        $this->postCapitalAndRent();
+
+        $statement = app(FinancialReportService::class)->getAccountStatement($this->companyA->id, $this->bankA->id);
+
+        $this->assertEquals(0, $statement['opening_balance']);
+        $this->assertEquals(8000, $statement['ending_balance']);
+    }
+
+    public function test_entry_date_serializes_as_plain_date(): void
+    {
+        $this->postCapitalAndRent();
+
+        $entry = JournalEntry::query()->orderBy('id')->first();
+
+        $this->assertSame('2026-01-05', $entry->toArray()['entry_date']);
+    }
+
+    private function postCapitalAndRent(): void
+    {
+        $journalService = app(JournalEntryService::class);
+
+        $journalService->create([
+            'company_id' => $this->companyA->id,
+            'entry_date' => '2026-01-05',
+            'description' => 'Capital',
+            'currency_id' => $this->sar->id,
+            'created_by' => $this->user->id,
+            'lines' => [
+                ['account_id' => $this->bankA->id, 'debit' => 10000, 'credit' => 0],
+                ['account_id' => $this->capitalA->id, 'debit' => 0, 'credit' => 10000],
+            ],
+        ], autoPost: true);
+
+        $journalService->create([
+            'company_id' => $this->companyA->id,
+            'entry_date' => '2026-01-08',
+            'description' => 'Rent Expense',
+            'currency_id' => $this->sar->id,
+            'created_by' => $this->user->id,
+            'lines' => [
+                ['account_id' => $this->rentA->id, 'debit' => 2000, 'credit' => 0],
+                ['account_id' => $this->bankA->id, 'debit' => 0, 'credit' => 2000],
+            ],
+        ], autoPost: true);
+    }
 }

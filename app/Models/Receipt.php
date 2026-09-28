@@ -32,7 +32,7 @@ class Receipt extends Model
     ];
 
     protected $casts = [
-        'receipt_date' => 'date',
+        'receipt_date' => 'date:Y-m-d',
         'amount' => 'decimal:4',
         'exchange_rate' => 'decimal:6',
         'base_amount' => 'decimal:4',

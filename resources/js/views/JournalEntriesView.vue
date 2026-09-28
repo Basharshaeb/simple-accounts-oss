@@ -57,7 +57,7 @@
             <tr v-for="entry in entries" :key="entry.id">
               <td class="fw-bold text-primary">{{ entry.entry_number }}</td>
               <td><span class="badge bg-secondary-subtle text-secondary">{{ entry.branch ? entry.branch.name : 'عام' }}</span></td>
-              <td>{{ entry.entry_date }}</td>
+              <td class="text-nowrap">{{ entry.entry_date }}</td>
               <td>{{ entry.description }}</td>
               <td><span class="badge bg-light text-dark border">{{ entry.reference || '-' }}</span></td>
               <td class="fw-bold text-success">{{ formatMoney(entry.total_debit) }}</td>

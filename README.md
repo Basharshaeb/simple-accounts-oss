@@ -4,6 +4,28 @@
 
 نظام محاسبة عربي بالقيد المزدوج، متعدد الشركات والفروع والعملات. مبني بـ Laravel 13 و Vue 3.
 
+## لقطات الشاشة
+
+**لوحة التحكم**
+
+![لوحة التحكم](docs/screenshots/1-dashboard.png)
+
+**إنشاء قيد يومي**
+
+![إنشاء قيد يومي](docs/screenshots/2-journal-entry.png)
+
+**ميزان المراجعة**
+
+![ميزان المراجعة](docs/screenshots/3-trial-balance.png)
+
+**دليل الحسابات**
+
+![دليل الحسابات](docs/screenshots/4-chart-of-accounts.png)
+
+**القيود اليومية**
+
+![القيود اليومية](docs/screenshots/5-journal-entries.png)
+
 ## المميزات
 
 - **تعدد الشركات**: كل شركة معزولة ببياناتها ومستخدميها، مع لوحة مدير عام (Super Admin) لإدارة الشركات.

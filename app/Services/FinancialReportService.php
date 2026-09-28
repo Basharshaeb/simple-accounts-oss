@@ -45,8 +45,9 @@ class FinancialReportService
                 })
                 ->where('account_id', $account->id);
 
-            $opDebit = (float) $openingQuery->sum('base_debit');
-            $opCredit = (float) $openingQuery->sum('base_credit');
+            // Without a start date everything is period movement, so there is no opening balance
+            $opDebit = $fromDate ? (float) $openingQuery->sum('base_debit') : 0.0;
+            $opCredit = $fromDate ? (float) $openingQuery->sum('base_credit') : 0.0;
 
             // Period movements query
             $periodQuery = JournalEntryLine::query()
@@ -69,13 +70,12 @@ class FinancialReportService
             $pDebit = (float) $periodQuery->sum('base_debit');
             $pCredit = (float) $periodQuery->sum('base_credit');
 
-            $netOpening = $account->nature === 'DEBIT' ? ($opDebit - $opCredit) : ($opCredit - $opDebit);
+            // Balances go in the debit or credit column by their actual sign, not by account nature
+            $netOpening = $opDebit - $opCredit;
             $opDebitDisplay = $netOpening > 0 ? $netOpening : 0.0;
             $opCreditDisplay = $netOpening < 0 ? abs($netOpening) : 0.0;
 
-            $totalDebitAll = $opDebit + $pDebit;
-            $totalCreditAll = $opCredit + $pCredit;
-            $netEnding = $account->nature === 'DEBIT' ? ($totalDebitAll - $totalCreditAll) : ($totalCreditAll - $totalDebitAll);
+            $netEnding = ($opDebit + $pDebit) - ($opCredit + $pCredit);
 
             $endingDebit = $netEnding > 0 ? $netEnding : 0.0;
             $endingCredit = $netEnding < 0 ? abs($netEnding) : 0.0;
@@ -139,8 +139,8 @@ class FinancialReportService
             })
             ->where('account_id', $accountId);
 
-        $opDebit = (float) $openingQuery->sum('base_debit');
-        $opCredit = (float) $openingQuery->sum('base_credit');
+        $opDebit = $fromDate ? (float) $openingQuery->sum('base_debit') : 0.0;
+        $opCredit = $fromDate ? (float) $openingQuery->sum('base_credit') : 0.0;
         $openingBalance = $account->nature === 'DEBIT' ? ($opDebit - $opCredit) : ($opCredit - $opDebit);
 
         // Lines in range

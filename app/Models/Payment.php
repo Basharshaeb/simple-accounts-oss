@@ -32,7 +32,7 @@ class Payment extends Model
     ];
 
     protected $casts = [
-        'payment_date' => 'date',
+        'payment_date' => 'date:Y-m-d',
         'amount' => 'decimal:4',
         'exchange_rate' => 'decimal:6',
         'base_amount' => 'decimal:4',
