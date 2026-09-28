@@ -33,8 +33,8 @@
 </div>
 
 ```bash
-git clone https://github.com/<your-user>/simple-accounts.git
-cd simple-accounts
+git clone https://github.com/Basharshaeb/simple-accounts-oss.git
+cd simple-accounts-oss
 composer install
 npm install
 cp .env.example .env
