@@ -1,0 +1,15 @@
+providers:
+- claude
+inputs:
+  language: typescript
+  package_manager: npm
+  test_command: npm test
+  lint_command: ''
+  typecheck_command: tsc --noEmit
+  package_layout:
+  - typescript
+  ci_test_commands:
+    typescript: npm test
+  ci_trigger_paths:
+    typescript:
+    - '**'

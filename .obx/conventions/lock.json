@@ -1,0 +1,28 @@
+{
+  "baseline": {
+    "revision": "4ae0351ac705",
+    "tree_sha256": "4ae0351ac7054bfd05016dd096cf87ae3ac2a15c82269e81ffc3e23c3a5d0aff"
+  },
+  "generator": {
+    "obx_version": "0.5.1",
+    "revision": 1
+  },
+  "inputs_sha256": "f3b48f7b6ccb9e80405647dd03eb106cd94de158a221804465436611277ad8d5",
+  "managed_files": {
+    ".claude/rules/principles.md": "d22653cd22ea68306658c94c1735fe7ea12bdf9cdbdb9a0b5302a2c1f77a76f4",
+    ".claude/skills/fix-ci/SKILL.md": "2c6f59cf67ec128466b4efe6721cd7b9d2ef91db2a5d8bb6a9a5d529f5caa8ed"
+  },
+  "schema_version": 1,
+  "sources": {
+    "fix-ci": {
+      "kind": "skill",
+      "origin": "base",
+      "sha256": "8f855211e310fe84d8e260d5859af32f2005cead250522e5f7bfa9afad796570"
+    },
+    "principles": {
+      "kind": "rule",
+      "origin": "base",
+      "sha256": "dade3a6948a68bc0f5537d3ebfdc347ec80150c2ff06a7d80ac9a062c63ebd5e"
+    }
+  }
+}

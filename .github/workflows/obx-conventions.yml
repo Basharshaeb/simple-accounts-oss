@@ -1,0 +1,30 @@
+name: obx-conventions
+
+on:
+  pull_request:
+  merge_group:
+
+jobs:
+  consistency:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install obx
+        shell: bash  # -eo pipefail: a failed download fails this step, not the check
+        env:
+          # An obx bearer token (obx_tok_*); not needed when the server serves a public index.
+          OBX_INSTALL_TOKEN: ${{ secrets.OBX_INSTALL_TOKEN }}
+        run: |
+          # Install the obx that wrote the lock, so CI computes the same inputs hash.
+          # No lock, or no version in it: the latest release.
+          OBX_VERSION=$(python3 -c 'import json, sys
+          print(json.load(open(sys.argv[1]))["generator"]["obx_version"])' \
+            .obx/conventions/lock.json 2>/dev/null || true)
+          export OBX_VERSION
+          curl -fsSL https://obx.obytes.com/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      # Read-only: the same computation as `obx watch`, never repairs or commits.
+      - name: Conventions check
+        run: obx conventions check --root .
